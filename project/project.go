@@ -228,6 +228,15 @@ func (p *Project) Stop(timeout int, services ...string) error {
 	}), nil)
 }
 
+// Exec executes a command inside the service (like docker exec).
+func (p *Project) Exec(options options.Exec, services ...string) error {
+	return p.perform(events.ProjectStopStart, events.ProjectStopDone, services, wrapperAction(func(wrapper *serviceWrapper, wrappers map[string]*serviceWrapper) {
+		wrapper.Do(nil, events.ServiceStopStart, events.ServiceStop, func(service Service) error {
+			return service.Stop(options)
+		})
+	}), nil)
+}
+
 // Down stops the specified services and clean related containers (like docker stop + docker rm).
 func (p *Project) Down(opts options.Down, services ...string) error {
 	if !opts.RemoveImages.Valid() {

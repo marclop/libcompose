@@ -28,6 +28,15 @@ type Create struct {
 	// ForceBuild bool
 }
 
+// Exec holds options of compose exec.
+type Exec struct {
+	Privileged    bool
+	Detached      bool
+	Tty           bool
+	User	      string
+	Index	      int
+}
+
 // Up holds options of compose up.
 type Up struct {
 	Create

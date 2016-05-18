@@ -111,6 +111,25 @@ func ProjectBuild(p project.APIProject, c *cli.Context) error {
 	return nil
 }
 
+// ProjectExec runs commands inside the specified services services.
+func ProjectExec(p project.APIProject, c *cli.Context) error {
+	if len(c.Args()) < 2 {
+		return cli.NewExitError("Please pass arguments in the form: SERVICE COMMAND [ARGS...]", 1)
+	}
+	config := options.Exec{
+		Privileged:  c.Bool("privileged"),
+		Detached:    c.Bool("d"),
+		Tty:         c.Bool("T"),
+		Index:	     c.Int("index"),
+		User:	     c.String("user"),
+	}
+	err := p.Exec(config, c.Args())
+	if err != nil {
+		return cli.NewExitError(err.Error(), 1)
+	}
+	return nil
+}
+
 // ProjectCreate creates all services but do not start them.
 func ProjectCreate(p project.APIProject, c *cli.Context) error {
 	options := options.Create{

@@ -14,6 +14,7 @@ type Service interface {
 	Build(buildOptions options.Build) error
 	Create(options options.Create) error
 	Up(options options.Up) error
+	Exec(options options.Exec) error
 	Start() error
 	Stop(timeout int) error
 	Delete(options options.Delete) error

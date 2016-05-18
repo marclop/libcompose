@@ -12,6 +12,7 @@ type APIProject interface {
 
 	Build(options options.Build, sevice ...string) error
 	Create(options options.Create, services ...string) error
+	Exec(options options.Exec, service string) error
 	Delete(options options.Delete, services ...string) error
 	Down(options options.Down, services ...string) error
 	Kill(signal string, services ...string) error

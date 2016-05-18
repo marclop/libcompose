@@ -51,6 +51,39 @@ func BuildCommand(factory app.ProjectFactory) cli.Command {
 	}
 }
 
+// ExecCommand defines the libcompose exec subcommand.
+func ExecCommand(factory app.ProjectFactory) cli.Command {
+	return cli.Command{
+		Name:	"exec",
+		Usage:	"Execute a command in a running container",
+		Action:	app.WithProject(factory, app.ProjectExec),
+		Flags:	[]cli.Flag{
+			cli.BoolFlag{
+				Name:	"privileged",
+				Usage:	"Give extended privileges to the process.",
+			},
+			cli.BoolFlag{
+				Name:	"d",
+				Usage:	"Detached mode: Run command in the background.",
+			},
+			cli.StringFlag{
+				Name:	"user",
+				Usage:	"Run the command as this user.",
+			},
+			cli.BoolFlag{
+				Name:	"T",
+				Usage:	"Disable pseudo-tty allocation. By default `docker-compose exec` allocates a TTY.",
+			},
+			cli.IntFlag{
+				Name:	"index",
+				Usage:	"index of the container if there are multiple instances of a service [default: 1]",
+				Value: 	1,
+			},
+		},
+	}
+
+}
+
 // PsCommand defines the libcompose ps subcommand.
 func PsCommand(factory app.ProjectFactory) cli.Command {
 	return cli.Command{

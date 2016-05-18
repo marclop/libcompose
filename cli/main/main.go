@@ -40,6 +40,7 @@ func main() {
 		command.UnpauseCommand(factory),
 		command.UpCommand(factory),
 		command.VersionCommand(factory),
+		command.ExecCommand(factory),
 	}
 
 	app.Run(os.Args)
